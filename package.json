@@ -1,0 +1,23 @@
+{
+  "name": "tirish.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tirish/tirish.github.io.git"
+  },
+  "author": "Tommy Irish <tirish.dev@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tirish/tirish.github.io/issues"
+  },
+  "homepage": "https://github.com/tirish/tirish.github.io#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "body-parser": "~1.12.0"
+  }
+}
