@@ -1,9 +1,9 @@
 (function(){
 
 
-    angular.module('tirish.github.io.app',['ui.bootstrap','ngRoute','ngAnimate'])
+    angular.module('tirish.github.io.app',['ui.bootstrap','ngRoute','ngAnimate', 'ui.select', 'ngSanitize'])
         .config(['$routeProvider','$locationProvider',
-            function($routeProvider, $locationProvider){
+            function($routeProvider){
                 var views = './site/views';
                 function view(path){
                     return views+path+'.html';
@@ -13,15 +13,14 @@
                         templateUrl:view('/home'),
                         controller: 'homeCtrl'
                     })
-                    .when('/test', {
-                        templateUrl:view('/test1'),
-                        controller: 'testCtrl'
+                    .when('/pokemon/evolve-calculator', {
+                        templateUrl:view('/pokemon/evolve-calculator'),
+                        controller: 'evolveCtrl'
                     })
                     .otherwise({
                         redirect:'/'
                     });
 
-                $locationProvider.html5Mode(true);
             }]);
 
 

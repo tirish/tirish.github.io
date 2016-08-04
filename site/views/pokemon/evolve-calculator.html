@@ -1,0 +1,53 @@
+
+<h1>
+    Evolve-Fest Calculator
+</h1>
+<button class="btn btn-success" ng-click="addEntry()">Add Pokemon</button>
+<br/><br/>
+<div ng-repeat="entry in data" class="evolve-block-wrapper">
+    <div class="panel evolve-block">
+        <span class="glyphicon glyphicon-remove pull-right clickable" ng-click="removeEntry($index)"></span>
+        <label>Pokemon</label>
+        <ui-select ng-model="entry.pokemon" theme="bootstrap">
+            <ui-select-match placeholder="Choose an pokemon..">
+            <span title="{{$select.selected.name}}">
+              <p class="invert-bottom-pad"><strong>{{$select.selected.name}}</strong></p>
+            <small>Evolution Cost: {{$select.selected.cost}}</small>
+            </span>
+            </ui-select-match>
+            <ui-select-choices repeat="poke in pokeOptions | filter: {name:$select.search}" position="down">
+                <span ng-bind-html="poke.name | highlight: $select.search"></span>
+                <br/>
+            </ui-select-choices>
+        </ui-select>
+        <br/>
+
+        <div class="form-group">
+            <label class="input-label full-width">
+                Available Candy
+                <input class="form-control" type="number" ng-model="entry.available" placeholder="Available" />
+            </label>
+        </div>
+
+
+        <br/>
+        <label>
+            <input type="checkbox" id="investSwitch" ng-model="entry.invest" />
+            <label for="investSwitch"></label>
+            Revest Rewards?
+        </label>
+        <hr/>
+        <p>
+            Can Evolve: <strong>{{results(entry).evolves}}</strong>
+        </p>
+        <p>
+            Candy Used: <strong>{{results(entry).used}}</strong>
+        </p>
+        <p>
+            Candy Left Over: <strong>{{results(entry).remaining}}</strong>
+        </p>
+
+    </div>
+</div>
+
+
