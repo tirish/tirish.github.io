@@ -10,6 +10,7 @@
                 function addEntry(){
                     $scope.data.push({
                         invest: true,
+                        transfer: false,
                         available: 0,
                         pokemon: null
                     });
@@ -35,6 +36,9 @@
                         data.evolves = Math.floor(entry.available / cost);
                         data.used = data.evolves * cost;
                         data.remaining = entry.available - data.used + data.evolves;
+                        if(entry.transfer){
+                            data.remaining += data.evolves;
+                        }
                     } else {
                         var available = entry.available;
                         do {
@@ -44,6 +48,9 @@
                             available += wave; //rewards
                             data.used += waveCost;
                             data.evolves += wave;
+                            if(entry.transfer){
+                                available += wave;
+                            }
                         } while (available > cost);
                         data.remaining = available;
                     }

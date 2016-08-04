@@ -31,10 +31,14 @@
 
 
         <br/>
-        <label>
-            <input type="checkbox" id="investSwitch" ng-model="entry.invest" />
-            <label for="investSwitch"></label>
-            Revest Rewards?
+        <label title="Use the candies rewarded for evolving (1 per)">
+            <input type="checkbox"  ng-model="entry.invest" />
+            Use Rewards?
+        </label>
+        <br/>
+        <label title="Immediately transfer after evolving (1 per)">
+            <input type="checkbox" ng-model="entry.transfer" />
+            Transfer after Evolving?
         </label>
         <hr/>
         <p>
