@@ -24,6 +24,11 @@
                     }
                 }
 
+                function reset(){
+                    $scope.data = [];
+                    addEntry();
+                }
+
                 function save(){
                     if(localStorageService.isSupported){
                         localStorageService.set('evolveCalc',angular.toJson($scope.data));
@@ -87,6 +92,7 @@
                 $scope.addEntry = addEntry;
                 $scope.removeEntry = removeEntry;
                 $scope.save = save;
+                $scope.reset = reset;
 
             }
         ]).factory('pokeData',[

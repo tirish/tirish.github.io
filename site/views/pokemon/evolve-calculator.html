@@ -4,6 +4,7 @@
 </h1>
 <br/>
 <button class="btn btn-primary" ng-click="addEntry()">Add Pokemon</button>
+<button class="btn btn-danger" ng-click="reset()" ng-disabled="!data.length">Clear All</button>
 <span>
     <button class="btn btn-success" ng-click="save()" ng-disabled="!storageSupported" uib-tooltip="Saves pokemon data to your local browser storage" >Save</button>
     <small ng-if="!storageSupported" class="text-warning">Sorry, your browser does not support local storage</small>
