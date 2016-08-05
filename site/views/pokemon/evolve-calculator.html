@@ -2,7 +2,12 @@
 <h1>
     Evolve-Fest Calculator
 </h1>
-<button class="btn btn-success" ng-click="addEntry()">Add Pokemon</button>
+<br/>
+<button class="btn btn-primary" ng-click="addEntry()">Add Pokemon</button>
+<span>
+    <button class="btn btn-success" ng-click="save()" ng-disabled="!storageSupported" uib-tooltip="Saves pokemon data to your local browser storage" >Save</button>
+    <small ng-if="!storageSupported" class="text-warning">Sorry, your browser does not support local storage</small>
+</span>
 <br/><br/>
 <div ng-repeat="entry in data" class="evolve-block-wrapper">
     <div class="panel evolve-block">
@@ -42,13 +47,13 @@
         </label>
         <hr/>
         <p>
-            Can Evolve: <strong>{{results(entry).evolves}}</strong>
+            Can Evolve:&nbsp;<strong>{{results(entry).evolves}}</strong> <small>XP:&nbsp;{{results(entry).evolves * 500}}</small>
         </p>
         <p>
-            Candy Used: <strong>{{results(entry).used}}</strong>
+            Candy Used:&nbsp;<strong>{{results(entry).used}}</strong>
         </p>
         <p>
-            Candy Left Over: <strong>{{results(entry).remaining}}</strong>
+            Candy Left Over:&nbsp;<strong>{{results(entry).remaining}}</strong>
         </p>
 
     </div>

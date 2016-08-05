@@ -1,21 +1,46 @@
 (function(){
 
     angular.module('tirish.github.io.app')
-        .controller('evolveCtrl', ['$scope','pokeData',
-            function($scope, pokeData) {
+        .controller('evolveCtrl', ['_','$scope','pokeData','localStorageService',
+            function(_, $scope, pokeData, localStorageService) {
 
                 $scope.data = [];
                 $scope.pokeOptions = pokeData.pokemon;
+
+                $scope.storageSupported = localStorageService.isSupported;
+
+                //initialize stored data
+                if(localStorageService.isSupported){
+                    var stored = localStorageService.get('evolveCalc');
+                    if(stored){
+                        try {
+                            var data = JSON.parse(stored);
+                            if(_.isArray(data)){
+                                $scope.data = data;
+                            }
+                        } catch (err){
+                            console.error('Stored data is malformed');
+                        }
+                    }
+                }
+
+                function save(){
+                    if(localStorageService.isSupported){
+                        localStorageService.set('evolveCalc',angular.toJson($scope.data));
+                    }
+                }
 
                 function addEntry(){
                     $scope.data.push({
                         invest: true,
                         transfer: false,
-                        available: 0,
+                        available: null,
                         pokemon: null
                     });
                 }
-                addEntry();
+                if(!$scope.data.length){
+                    addEntry();
+                }
 
                 function removeEntry(idx){
                     _.pullAt($scope.data,idx);
@@ -27,20 +52,21 @@
                         used: 0,
                         remaining: 0
                     };
+
                     if(!entry || !entry.pokemon){
                         return data;
                     }
 
-                    var cost = entry.pokemon.cost;
+                    var cost = entry.pokemon.cost || 0;
+                    var available = entry.available || 0;
                     if (!entry.invest) {
-                        data.evolves = Math.floor(entry.available / cost);
+                        data.evolves = Math.floor(available / cost);
                         data.used = data.evolves * cost;
-                        data.remaining = entry.available - data.used + data.evolves;
+                        data.remaining = available - data.used + data.evolves;
                         if(entry.transfer){
                             data.remaining += data.evolves;
                         }
                     } else {
-                        var available = entry.available;
                         do {
                             var wave = Math.floor(available / cost);
                             var waveCost = (wave * cost);
@@ -60,6 +86,7 @@
                 $scope.results = results;
                 $scope.addEntry = addEntry;
                 $scope.removeEntry = removeEntry;
+                $scope.save = save;
 
             }
         ]).factory('pokeData',[
