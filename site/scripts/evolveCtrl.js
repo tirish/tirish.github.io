@@ -51,7 +51,7 @@
                             if(entry.transfer){
                                 available += wave;
                             }
-                        } while (available > cost);
+                        } while (available >= cost);
                         data.remaining = available;
                     }
                     return data;
