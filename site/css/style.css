@@ -3,8 +3,23 @@
     display:inline-block;
 }
 
+.pokemon-img {
+    max-height: 50px;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .evolve-block-wrapper {
     display:inline;
+}
+
+.evolve-wrapper {
+    /*
+    overflow-y:scroll;
+    max-height:1000px;
+    min-height: 500px;
+    */
 }
 
 .clickable {
@@ -38,5 +53,11 @@ hr {
 }
 
 .evolve-block span.ui-select-toggle {
-    height:70px;
+    height:120px;
+}
+.evolve-block div.ui-select-container {
+    height:120px;
+}
+.evolve-block ul.ui-select-choices {
+    margin-top:-85px;
 }

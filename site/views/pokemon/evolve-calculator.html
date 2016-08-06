@@ -10,53 +10,56 @@
     <small ng-if="!storageSupported" class="text-warning">Sorry, your browser does not support local storage</small>
 </span>
 <br/><br/>
-<div ng-repeat="entry in data" class="evolve-block-wrapper">
-    <div class="panel evolve-block">
-        <span class="glyphicon glyphicon-remove pull-right clickable" ng-click="removeEntry($index)"></span>
-        <label>Pokemon</label>
-        <ui-select ng-model="entry.pokemon" theme="bootstrap">
-            <ui-select-match placeholder="Choose an pokemon..">
-            <span title="{{$select.selected.name}}">
-              <p class="invert-bottom-pad"><strong>{{$select.selected.name}}</strong></p>
-            <small>Evolution Cost: {{$select.selected.cost}}</small>
-            </span>
-            </ui-select-match>
-            <ui-select-choices repeat="poke in pokeOptions | filter: {name:$select.search}" position="down">
-                <span ng-bind-html="poke.name | highlight: $select.search"></span>
-                <br/>
-            </ui-select-choices>
-        </ui-select>
-        <br/>
+<div class="evolve-wrapper">
+    <div ng-repeat="entry in data" class="evolve-block-wrapper">
+        <div class="panel evolve-block">
+            <span class="glyphicon glyphicon-remove pull-right clickable" ng-click="removeEntry($index)"></span>
+            <label>Pokemon</label>
+            <ui-select ng-model="entry.pokemon" theme="bootstrap">
+                <ui-select-match placeholder="Choose an pokemon..">
+                <span title="{{$select.selected.name}}">
+                  <p class="invert-bottom-pad"><strong>{{$select.selected.name}}</strong></p>
+                    <img class="pokemon-img" ng-show="$select.selected.imgUrl" ng-src="{{$select.selected.imgUrl}}">
+                    <small>Evolution Cost: {{$select.selected.cost}}</small>
+                </span>
+                </ui-select-match>
+                <ui-select-choices repeat="poke in pokeOptions | filter: {name:$select.search}" position="down">
+                    <span ng-bind-html="poke.name | highlight: $select.search"></span>
+                    <br/>
+                </ui-select-choices>
+            </ui-select>
+            <br/>
 
-        <div class="form-group">
-            <label class="input-label full-width">
-                Available Candy
-                <input class="form-control" type="number" ng-model="entry.available" placeholder="Available" />
+            <div class="form-group">
+                <label class="input-label full-width">
+                    Available Candy
+                    <input class="form-control" type="number" ng-model="entry.available" placeholder="Available" />
+                </label>
+            </div>
+
+
+            <br/>
+            <label title="Use the candies rewarded for evolving (1 per)">
+                <input type="checkbox"  ng-model="entry.invest" />
+                Use Rewards?
             </label>
+            <br/>
+            <label title="Immediately transfer after evolving (1 per)">
+                <input type="checkbox" ng-model="entry.transfer" />
+                Transfer after Evolving?
+            </label>
+            <hr/>
+            <p>
+                Can Evolve:&nbsp;<strong>{{results(entry).evolves}}</strong> <small>XP:&nbsp;{{results(entry).evolves * 500}}</small>
+            </p>
+            <p>
+                Candy Used:&nbsp;<strong>{{results(entry).used}}</strong>
+            </p>
+            <p>
+                Candy Left Over:&nbsp;<strong>{{results(entry).remaining}}</strong>
+            </p>
+
         </div>
-
-
-        <br/>
-        <label title="Use the candies rewarded for evolving (1 per)">
-            <input type="checkbox"  ng-model="entry.invest" />
-            Use Rewards?
-        </label>
-        <br/>
-        <label title="Immediately transfer after evolving (1 per)">
-            <input type="checkbox" ng-model="entry.transfer" />
-            Transfer after Evolving?
-        </label>
-        <hr/>
-        <p>
-            Can Evolve:&nbsp;<strong>{{results(entry).evolves}}</strong> <small>XP:&nbsp;{{results(entry).evolves * 500}}</small>
-        </p>
-        <p>
-            Candy Used:&nbsp;<strong>{{results(entry).used}}</strong>
-        </p>
-        <p>
-            Candy Left Over:&nbsp;<strong>{{results(entry).remaining}}</strong>
-        </p>
-
     </div>
 </div>
 
