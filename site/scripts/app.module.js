@@ -26,11 +26,15 @@
                         templateUrl:view('/pokemon/evolve-calculator'),
                         controller: 'evolveCtrl'
                     })
+                    .when('/pokemon/pokedex', {
+                        templateUrl:view('/pokemon/pokedex'),
+                        controller: 'pokedexCtrl'
+                    })
                     .otherwise({
                         redirect:'/'
                     });
 
-                localStorageServiceProvider.setPrefix('v1');//version will change with breaking changes
+                localStorageServiceProvider.setPrefix('v2');//version will change with breaking changes
             }]);
 
 

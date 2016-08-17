@@ -2,6 +2,14 @@
 <h1>
     Evolve-Fest Calculator
 </h1>
+<div class="well">
+    <p>
+        Total Evolutions: <strong>{{aggregateResults()}}</strong> <small>XP:&nbsp;{{aggregateResults() * 500}}</small>
+    </p>
+    <p>
+        Total Lucky Egg XP Gain: <strong>{{aggregateResults() * 1000}}</strong>
+    </p>
+</div>
 <br/>
 <button class="btn btn-primary" ng-click="addEntry()">Add Pokemon</button>
 <button class="btn btn-danger" ng-click="reset()" ng-disabled="!data.length">Clear All</button>
@@ -15,7 +23,7 @@
         <div class="panel evolve-block">
             <span class="glyphicon glyphicon-remove pull-right clickable" ng-click="removeEntry($index)"></span>
             <label>Pokemon</label>
-            <ui-select ng-model="entry.pokemon" theme="bootstrap">
+            <ui-select ng-model="entry.pokemonNumber" theme="bootstrap">
                 <ui-select-match placeholder="Choose an pokemon..">
                 <span title="{{$select.selected.name}}">
                   <p class="invert-bottom-pad"><strong>{{$select.selected.name}}</strong></p>
@@ -23,7 +31,7 @@
                     <small>Evolution Cost: {{$select.selected.cost}}</small>
                 </span>
                 </ui-select-match>
-                <ui-select-choices repeat="poke in pokeOptions | filter: {name:$select.search}" position="down">
+                <ui-select-choices repeat="poke.num as poke in pokeOptions | filter: {name:$select.search}" position="down">
                     <span ng-bind-html="poke.name | highlight: $select.search"></span>
                     <br/>
                 </ui-select-choices>

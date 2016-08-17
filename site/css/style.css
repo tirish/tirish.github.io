@@ -5,6 +5,7 @@
 
 .pokemon-img {
     max-height: 50px;
+    max-width: 80px;
     display:block;
     margin-left: auto;
     margin-right: auto;
@@ -48,6 +49,18 @@ hr {
     padding:10px;
 }
 
+.panel-fill {
+    height:100%;
+    width:100%;
+}
+
+.poke-panel {
+    margin: 5px;
+    display:inline-block;
+    height:110px;
+    width:110px;
+}
+
 .full-width {
     width: 100%;
 }
@@ -60,4 +73,8 @@ hr {
 }
 .evolve-block ul.ui-select-choices {
     margin-top:-85px;
+}
+
+.grid-line {
+    display: table;
 }
