@@ -981,6 +981,7 @@
                 _.each(pokemon, function(raw, idx){
                     _.extend(raw, {
                         num: idx+1,
+                        numberAndName: '#'+pad(idx+1)+': '+raw.n,
                         imgUrl: '/site/img/pokemon/'+pad(idx+1)+'.png'
                     });
                 });
@@ -993,6 +994,7 @@
 
                     return {
                         name: raw.n,
+                        numberAndName: raw.numberAndName,
                         num: raw.num,
                         imgUrl: raw.imgUrl,
                         cost: _.get(_.find(raw.e,'c'),'c') //grab cost of first one

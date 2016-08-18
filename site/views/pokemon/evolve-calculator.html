@@ -25,14 +25,14 @@
             <label>Pokemon</label>
             <ui-select ng-model="entry.pokemonNumber" theme="bootstrap">
                 <ui-select-match placeholder="Choose an pokemon..">
-                <span title="{{$select.selected.name}}">
-                  <p class="invert-bottom-pad"><strong>{{$select.selected.name}}</strong></p>
+                <span title="{{$select.selected.numberAndName}}">
+                  <p class="invert-bottom-pad"><strong>{{$select.selected.numberAndName}}</strong></p>
                     <img class="pokemon-img" ng-show="$select.selected.imgUrl" ng-src="{{$select.selected.imgUrl}}">
                     <small>Evolution Cost: {{$select.selected.cost}}</small>
                 </span>
                 </ui-select-match>
-                <ui-select-choices repeat="poke.num as poke in pokeOptions | filter: {name:$select.search}" position="down">
-                    <span ng-bind-html="poke.name | highlight: $select.search"></span>
+                <ui-select-choices repeat="poke.num as poke in pokeOptions | filter: {numberAndName:$select.search}" position="down">
+                    <span ng-bind-html="poke.numberAndName | highlight: $select.search"></span>
                     <br/>
                 </ui-select-choices>
             </ui-select>
