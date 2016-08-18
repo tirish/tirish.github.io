@@ -79,7 +79,7 @@ hr {
     background-color: white;
     z-index: 999;
     width:100%;
-    padding: 10px 10px 15px;
+    padding: 10px 10px 15px 0px;
 }
 
 .grid-line {
