@@ -7,7 +7,8 @@
             'ngAnimate',
             'ui.select',
             'ngSanitize',
-            'LocalStorageModule'
+            'LocalStorageModule',
+            'tirish.github.io.util.ui'
         ])
         .constant('_',_)
         .constant('$',$)

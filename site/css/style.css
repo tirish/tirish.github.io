@@ -75,6 +75,33 @@ hr {
     margin-top:-85px;
 }
 
+.toolbar {
+    background-color: white;
+    z-index: 999;
+    width:100%;
+    padding:10px;
+}
+
 .grid-line {
     display: table;
+}
+
+
+a.back-to-top {
+    position: fixed;
+    z-index:999;
+    bottom: 2em;
+    right: 0px;
+    text-decoration: none;
+    color: #000000;
+    background-color: rgba(235, 235, 235, 0.80);
+    border-width: 0;
+    font-size: 12px;
+    padding: 1em;
+    display: none;
+    margin-right:10px;
+}
+
+a.back-to-top:hover {
+    background-color: rgba(135, 135, 135, 0.50);
 }

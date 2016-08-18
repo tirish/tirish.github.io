@@ -11,12 +11,14 @@
     </p>
 </div>
 <br/>
-<button class="btn btn-primary" ng-click="addEntry()">Add Pokemon</button>
-<button class="btn btn-danger" ng-click="reset()" ng-disabled="!data.length">Clear All</button>
-<span>
-    <button class="btn btn-success" ng-click="save()" ng-disabled="!storageSupported" uib-tooltip="Saves pokemon data to your local browser storage" >Save</button>
-    <small ng-if="!storageSupported" class="text-warning">Sorry, your browser does not support local storage</small>
-</span>
+<div class="toolbar" scroll-anchor scroll-anchor-offset="50">
+    <button class="btn btn-primary" ng-click="addEntry()">Add Pokemon</button>
+    <button class="btn btn-danger" ng-click="reset()" ng-disabled="!data.length">Clear All</button>
+    <span>
+        <button class="btn btn-success" ng-click="save()" ng-disabled="!storageSupported" uib-tooltip="Saves pokemon data to your local browser storage" >Save</button>
+        <small ng-if="!storageSupported" class="text-warning">Sorry, your browser does not support local storage</small>
+    </span>
+</div>
 <br/><br/>
 <div class="evolve-wrapper">
     <div ng-repeat="entry in data" class="evolve-block-wrapper">
