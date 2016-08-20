@@ -20,10 +20,10 @@
 </div>
 <div class="dndContainer">
     <ul class="evolve-wrapper" dnd-list="data" dnd-horizontal-list="true">
-        <li ng-repeat="entry in data" class="evolve-block-wrapper"  dnd-draggable="entry" dnd-moved="removeEntry($index)">
+        <li ng-repeat="entry in data" class="evolve-block-wrapper"  dnd-draggable="entry" dnd-moved="removeEntry($index)" dnd-disable-if="isMobile">
             <div class="panel evolve-block">
                 <div>
-                    <span class="glyphicon glyphicon-move pull-left draggable"  ></span>
+                    <span ng-if="!isMobile" class="glyphicon glyphicon-move pull-left draggable"  ></span>
                     <span dnd-nodrag class="glyphicon glyphicon-remove pull-right clickable" ng-click="removeEntry($index)"></span>
                 </div>
                 <hr  dnd-nodrag/>

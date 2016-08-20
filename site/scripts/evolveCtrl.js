@@ -1,9 +1,10 @@
 (function(){
 
     angular.module('tirish.github.io.app')
-        .controller('evolveCtrl', ['_','$scope','pokeData','localStorageService',
-            function(_, $scope, pokeData, localStorageService) {
+        .controller('evolveCtrl', ['_','$scope','pokeData','localStorageService', 'uiHelpers',
+            function(_, $scope, pokeData, localStorageService, uiHelpers) {
 
+                $scope.isMobile = uiHelpers.isMobile;
                 $scope.data = [];
                 $scope.pokeOptions = pokeData.evolvePokemon;
                 var pokemonLookup = _.indexBy(pokeData.evolvePokemon,'num');
