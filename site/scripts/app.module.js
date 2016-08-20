@@ -8,7 +8,8 @@
             'ui.select',
             'ngSanitize',
             'LocalStorageModule',
-            'tirish.github.io.util.ui'
+            'tirish.github.io.util.ui',
+            'dndLists'
         ])
         .constant('_',_)
         .constant('$',$)

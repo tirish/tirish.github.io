@@ -47,6 +47,12 @@
                         pokemonNumber: null
                     });
                 }
+
+                function insertEntry(entry, index){
+                    $scope.data.splice(index, 0, entry);
+                }
+
+
                 if(!$scope.data.length){
                     addEntry();
                 }
@@ -107,6 +113,7 @@
 
                 $scope.results = resultsMemo;
                 $scope.addEntry = addEntry;
+                $scope.insertEntry = insertEntry;
                 $scope.removeEntry = removeEntry;
                 $scope.save = save;
                 $scope.reset = reset;

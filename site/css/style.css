@@ -13,18 +13,15 @@
 
 .evolve-block-wrapper {
     display:inline;
-}
-
-.evolve-wrapper {
-    /*
-    overflow-y:scroll;
-    max-height:1000px;
-    min-height: 500px;
-    */
+    margin-right:20px;
 }
 
 .clickable {
     cursor: pointer;
+}
+
+.draggable {
+    cursor: move;
 }
 
 .input-select2 {
@@ -47,6 +44,7 @@ hr {
     -webkit-box-shadow: none;
     box-shadow: none;
     padding:10px;
+    position:relative;
 }
 
 .panel-fill {
@@ -112,6 +110,26 @@ a.back-to-top:hover {
 }
 
 .evolve-block {
-    height: 470px;
+    height: 500px;
     vertical-align: top;
+}
+
+.evolve-wrapper .dndPlaceholder {
+    margin-left: 0;
+    background-color: #e7e7e7;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding:10px;
+    height:500px;
+    width:237px;
+    margin-right:20px;
+}
+
+.evolve-wrapper {
+    margin-left:0;
+    padding-left:0;
+    margin-top:5px;
 }
