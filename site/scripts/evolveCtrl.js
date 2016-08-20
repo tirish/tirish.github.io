@@ -59,7 +59,8 @@
                     var data = {
                         evolves: 0,
                         used: 0,
-                        remaining: 0
+                        remaining: 0,
+                        needed: 0
                     };
 
 
@@ -91,6 +92,8 @@
                         } while (available >= cost);
                         data.remaining = available;
                     }
+
+                    data.needed = cost - data.remaining;
                     return data;
                 }, function(entry){
                     return entry.pokemonNumber + '-'+entry.available + '-' + entry.invest + '-' + entry.transfer;

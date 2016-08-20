@@ -60,13 +60,15 @@
             <p>
                 Can Evolve:&nbsp;<strong>{{results(entry).evolves}}</strong> <small>XP:&nbsp;{{results(entry).evolves * 500}}</small>
             </p>
-            <p>
+            <p  ng-show="results(entry).evolves <= 0">
+                Candy Needed:&nbsp;<strong>{{results(entry).needed}}</strong>
+            </p>
+            <p ng-show="results(entry).evolves > 0">
                 Candy Used:&nbsp;<strong>{{results(entry).used}}</strong>
             </p>
-            <p>
+            <p ng-show="results(entry).evolves > 0">
                 Candy Left Over:&nbsp;<strong>{{results(entry).remaining}}</strong>
             </p>
-
         </div>
     </div>
 </div>

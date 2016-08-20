@@ -110,3 +110,8 @@ a.back-to-top:hover {
 .evolve-well {
     margin-bottom:0px !important;
 }
+
+.evolve-block {
+    height: 470px;
+    vertical-align: top;
+}
