@@ -1,8 +1,8 @@
 (function(){
 
     angular.module('tirish.github.io.app')
-        .controller('evolveCtrl', ['_','$scope','pokeData','localStorageService', 'uiHelpers',
-            function(_, $scope, pokeData, localStorageService, uiHelpers) {
+        .controller('evolveCtrl', ['_','$scope','pokeData','localStorageService', 'uiHelpers', 'timeHelper',
+            function(_, $scope, pokeData, localStorageService, uiHelpers, timeHelper) {
 
                 $scope.isMobile = uiHelpers.isMobile;
                 $scope.data = [];
@@ -111,6 +111,26 @@
                         return total + (resultsMemo(entry).evolves||0);
                     }, 0);
                 }
+
+                var timer = timeHelper.createTimer(30, 0);
+
+                $scope.timer = {
+                    toggle: function(){
+                      if(timer.running){
+                          timer.pause();
+                      } else {
+                          timer.start();
+                      }
+                    },
+                    reset: function(){
+                        timer.stop();
+                    },
+                    time: timer,
+                    running: function(){
+                        return timer.running
+                    }
+                };
+
 
                 $scope.results = resultsMemo;
                 $scope.addEntry = addEntry;

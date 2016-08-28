@@ -2,13 +2,27 @@
 <h1>
     Evolve-Fest Calculator
 </h1>
-<div class="well evolve-well">
-    <p>
-        Total Evolutions: <strong>{{aggregateResults()}}</strong> <small>XP:&nbsp;{{aggregateResults() * 500}}</small>
-    </p>
-    <p>
-        Total Lucky Egg XP Gain: <strong>{{aggregateResults() * 1000}}</strong>
-    </p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="well evolve-well">
+            <p>
+                Total Evolutions: <strong>{{aggregateResults()}}</strong> <small>XP:&nbsp;{{aggregateResults() * 500}}</small>
+            </p>
+            <p>
+                Total Lucky Egg XP Gain: <strong>{{aggregateResults() * 1000}}</strong>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="well evolve-well">
+            <uib-progressbar max="timer.time.total" value="timer.time.elapsed"></uib-progressbar>
+            <p>
+                <h1 style="text-align: center;">{{timer.time.min}}:{{timer.time.sec | numberFixedLen:2}}</h1>
+            </p>
+            <button class="btn btn-sm btn-primary" ng-click="timer.toggle()">{{!timer.running() ? 'Start' : 'Pause' }}</button>
+            <button class="btn btn-sm" ng-click="timer.reset()" ng-disabled="!timer.time.elapsed">Reset</button>
+        </div>
+    </div>
 </div>
 <div class="toolbar" scroll-anchor scroll-anchor-offset="51">
     <button class="btn btn-primary" ng-click="addEntry()">Add Pokemon</button>

@@ -9,6 +9,7 @@
             'ngSanitize',
             'LocalStorageModule',
             'tirish.github.io.util.ui',
+            'tirish.github.io.util.misc',
             'dndLists'
         ])
         .constant('_',_)
