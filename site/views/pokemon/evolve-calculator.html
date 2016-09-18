@@ -32,7 +32,7 @@
         <small ng-if="!storageSupported" class="text-warning">Sorry, your browser does not support local storage</small>
     </span>
 </div>
-<div class="dndContainer">
+<div class="dndContainer" id="pokemon-container">
     <ul class="evolve-wrapper" dnd-list="data" dnd-horizontal-list="true">
         <li ng-repeat="entry in data" class="evolve-block-wrapper"  dnd-draggable="entry" dnd-moved="removeEntry($index)" dnd-disable-if="isMobile">
             <div class="panel evolve-block"  dnd-nodrag>

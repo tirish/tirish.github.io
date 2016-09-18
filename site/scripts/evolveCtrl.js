@@ -1,8 +1,8 @@
 (function(){
 
     angular.module('tirish.github.io.app')
-        .controller('evolveCtrl', ['_','$scope','pokeData','localStorageService', 'uiHelpers', 'timeHelper',
-            function(_, $scope, pokeData, localStorageService, uiHelpers, timeHelper) {
+        .controller('evolveCtrl', ['_','$scope','pokeData','localStorageService', 'uiHelpers', 'timeHelper', '$',
+            function(_, $scope, pokeData, localStorageService, uiHelpers, timeHelper, $) {
 
                 $scope.isMobile = uiHelpers.isMobile;
                 $scope.data = [];
@@ -47,6 +47,12 @@
                         available: null,
                         pokemonNumber: null
                     });
+
+                    //scroll to bottom of pokemon wrapper
+                    var container = $('#pokemon-container');
+                    var bottom = container.offset().top + container.height();
+                    uiHelpers.scrollTo(bottom, 250);
+
                 }
 
                 function insertEntry(entry, index){
