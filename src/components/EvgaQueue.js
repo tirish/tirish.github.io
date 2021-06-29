@@ -1,10 +1,9 @@
 import { Component } from 'react';
 import * as storage from '../helpers/storage';
 import './EvgaQueue.css';
+import ButtonLink from './ButtonLink';
 
 const apiUrl = 'https://e35-queue-tracker-api.herokuapp.com/product/?sortBy=sku:desc';
-
-const pad = (num) => num < 10 ? '0' + num : num.toString();
 
 const formatDate = (dateStr, isPt) => {
 
@@ -13,6 +12,27 @@ const formatDate = (dateStr, isPt) => {
     const date = new Date(dateStr);
     // isPt -> server kicks back date as UTC but the value is actually a PT date
     return isPt ? date.toLocaleString('en-US', { timeZone: 'UTC'}): date.toLocaleString('en-US');
+};
+
+//substrings -- order matters since this is the order the substring matching is run
+const categories = [
+    '3090',
+    '3080 Ti',
+    '3080',
+    '3070 Ti',
+    '3070',    
+    '3060 Ti',
+    '3060',
+    'Misc'
+];
+    
+const getCategory = (item) => {
+    for(let i = 0; i < categories.length; i++){
+        if(item.name.indexOf(categories[i]) >= 0){
+            return categories[i];
+        }
+    }
+    return 'Misc';
 }
 
 export default class EvgaQueue extends Component {
@@ -37,7 +57,8 @@ export default class EvgaQueue extends Component {
                     productLink: 'https://www.evga.com/products/product.aspx?pn=' + d.sku,
                     timestamp: formatDate(d.timestampNA, true),
                     updated: formatDate(d.updatedAt),
-                    hide: !!(storage.get(d.sku) || {}).hide || !d.timestampNA
+                    hide: !!(storage.get(d.sku) || {}).hide || !d.timestampNA,
+                    category: getCategory(d)
                 }));
                 self.setState({ data: data, error: false, lastRefresh: formatDate(new Date()) });
             })
@@ -70,6 +91,49 @@ export default class EvgaQueue extends Component {
         this.setState({ data: data });
     }
     
+    renderCategoryRows = (category) => {
+
+        const renderData = this.state.data.filter(d => d.category === category).map(d => ({
+            ...d,
+            show: !d.hide || this.state.showHidden
+        }));
+
+        if(!renderData.some(d => d.show)){
+            return (<></>);
+        }
+
+        return (
+            <>
+                <tr className="EvgaQueue-table-category-row">
+                    <th colSpan={5}>
+                        {category}
+                    </th>
+                </tr>
+                {
+                    renderData.map(d => (
+                        d.show && (<tr key={d.sku}>
+                            <td>
+                                <a href={d.productLink} target="_blank" rel="noreferrer">{d.sku}</a>
+                            </td>
+                            <td>
+                                {d.name}
+                            </td>
+                            <td>
+                                {d.timestamp}
+                            </td>
+                            <td>
+                                {d.updated}
+                            </td>
+                            <td>
+                                <ButtonLink onClick={() => this.toggleSku(d.sku)}>{d.hide ? 'Show' : 'Hide'}</ButtonLink>
+                            </td>
+                        </tr>)
+                    ))
+                }
+            </>              
+        );
+    }
+
     render = () => {
 
         if(this.state.loading){
@@ -78,8 +142,6 @@ export default class EvgaQueue extends Component {
         if(this.state.error){
             return (<span>Encountered error</span>);
         }
-
-        const renderData = this.state.data;
 
         return (
             <div className="EvgaQueue-container">
@@ -104,31 +166,11 @@ export default class EvgaQueue extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                    {
-                        renderData.map(d => (
-                            (!d.hide || this.state.showHidden) && (<tr key={d.sku}>
-                                <td>
-                                    <a href={d.productLink} target="_blank" rel="noreferrer">{d.sku}</a>
-                                </td>
-                                <td>
-                                    {d.name}
-                                </td>
-                                <td>
-                                    {d.timestamp}
-                                </td>
-                                <td>
-                                    {d.updated}
-                                </td>
-                                <td>
-                                    <a href="#" onClick={() => this.toggleSku(d.sku)}>{d.hide ? 'Show' : 'Hide'}</a>
-                                </td>
-                            </tr>)
-                        ))
-                    }
+                        { categories.map(c => this.renderCategoryRows(c))}                    
                     </tbody>
                 </table>
                 <div className="EvgaQueue-showhidden-toggle-container">
-                    <a href="#" class="EvgaQueue-showhidden-toggle" onClick={() => this.toggleShowHidden()}>{this.state.showHidden ? 'Hide hidden items' : 'Show hidden items'}</a>
+                    <ButtonLink className="EvgaQueue-showhidden-toggle" onClick={() => this.toggleShowHidden()}>{this.state.showHidden ? 'Hide hidden items' : 'Show hidden items'}</ButtonLink>
                 </div>
                 <div className="EvgaQueue-footer">
                     <div className="EvgaQueue-footer-datasource">

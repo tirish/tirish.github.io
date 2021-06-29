@@ -1,6 +1,8 @@
 .EvgaQueue-table {
     width: 100%;
     text-align: center;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .EvgaQueue-showhidden-toggle-container {
@@ -22,8 +24,6 @@
 
 .EvgaQueue-container {
     margin-bottom: 80px;
-    max-width: 1200px;
-    margin: auto;
 }
 
 .EvgaQueue-footer {
@@ -34,4 +34,8 @@
     width: 100%;
     text-align: center;
     background-color: #282c34;
+}
+
+.EvgaQueue-table-category-row th {
+    padding-top: 16px;
 }
