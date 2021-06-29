@@ -1,0 +1,35 @@
+.EvgaQueue-table {
+    width: 100%;
+    text-align: center;
+}
+
+.EvgaQueue-showhidden-toggle-container {
+    text-align: center;
+    margin-top: 16px;
+}
+
+
+.EvgaQueue-container a {
+    color: #61dafb;
+    text-decoration: none !important;
+}
+.EvgaQueue-container a:visited {
+    color: #61dafb;
+}
+.EvgaQueue-container a:hover {
+    color: #61dafb;
+}
+
+.EvgaQueue-container {
+    margin-bottom: 80px;
+}
+
+.EvgaQueue-footer {
+    position: fixed;
+    padding: 16px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #282c34;
+}
