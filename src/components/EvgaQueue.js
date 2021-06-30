@@ -5,13 +5,6 @@ import ButtonLink from './ButtonLink';
 
 const apiUrl = 'https://e35-queue-tracker-api.herokuapp.com/product/?sortBy=sku:desc';
 
-const fixDateStr = (dateStr) => {
-    // date is coming in with odd offset, fix to be UTC
-    let d = new Date(dateStr);
-    d.setHours(d.getHours() + 2);
-    return d.toISOString();
-};
-
 const formatDate = (dateStr, isPt) => {
 
     if(!dateStr) return '';
@@ -19,6 +12,12 @@ const formatDate = (dateStr, isPt) => {
     const date = new Date(dateStr);
     // isPt -> server kicks back date as UTC but the value is actually a PT date
     return isPt ? date.toLocaleString('en-US', { timeZone: 'UTC'}): date.toLocaleString('en-US');
+};
+
+const formatDateOnly = (dateStr) => {
+    if(!dateStr) return '';
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US');
 };
 
 //substrings -- order matters since this is the order the substring matching is run
@@ -63,7 +62,7 @@ export default class EvgaQueue extends Component {
                     name: d.name,
                     productLink: 'https://www.evga.com/products/product.aspx?pn=' + d.sku,
                     timestamp: formatDate(d.timestampNA, true),
-                    updated: formatDate(fixDateStr(d.updatedAt)),
+                    updated: formatDateOnly(d.updatedAt),
                     hide: !!(storage.get(d.sku) || {}).hide || !d.timestampNA,
                     category: getCategory(d)
                 }));
@@ -165,7 +164,7 @@ export default class EvgaQueue extends Component {
                                 Queue Timestamp (PT)
                             </th>
                             <th>
-                                Last Update (Local)
+                                Last Update
                             </th>
                             <th>
                                 Toggle
