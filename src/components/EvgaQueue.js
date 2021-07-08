@@ -2,8 +2,16 @@ import { Component } from 'react';
 import * as storage from '../helpers/storage';
 import './EvgaQueue.css';
 import ButtonLink from './ButtonLink';
+import QueueTextbox from './QueueTextbox';
 
 const apiUrl = 'https://e35-queue-tracker-api.herokuapp.com/product/?sortBy=sku:desc';
+
+const getStorage = (sku) => {
+    let obj = { hide: false, myQueue: {} };
+    let val = storage.get(sku) || {};
+    Object.assign(obj, val);
+    return obj;
+};
 
 const formatDate = (dateStr, isPt) => {
 
@@ -39,7 +47,28 @@ const getCategory = (item) => {
         }
     }
     return 'Misc';
-}
+};
+
+const expectedFormatReg = /^(\d{1,2}\/\d{1,2}\/\d{4}\s+\d{1,2}:\d{2}:\d{2}\s+[AP]M)(?:\s+PT)$/;
+const setMyQueueDisplay = (myQueue) => {
+    myQueue = myQueue || {};
+    const raw = myQueue.raw;
+    if(!raw){
+        myQueue.display = '';
+    } else {
+        const m = myQueue.raw.match(expectedFormatReg);
+        if(!m || !m.length){
+            myQueue.raw = '';
+            myQueue.display = '';
+        } else {
+            const dateStr = m[1] + ' GMT+0000';
+            const date = new Date(dateStr);
+            myQueue.display = date.toLocaleString('en-US', { timeZone: 'UTC' });
+        }        
+    }
+
+    return myQueue;
+};
 
 export default class EvgaQueue extends Component {
 
@@ -63,7 +92,8 @@ export default class EvgaQueue extends Component {
                     productLink: 'https://www.evga.com/products/product.aspx?pn=' + d.sku,
                     timestamp: formatDate(d.timestampNA, true),
                     updated: formatDateOnly(d.updatedAt),
-                    hide: !!(storage.get(d.sku) || {}).hide || !d.timestampNA,
+                    hide: !!getStorage(d.sku).hide || !d.timestampNA,
+                    myQueue: setMyQueueDisplay(getStorage(d.sku).myQueue),
                     category: getCategory(d)
                 }));
                 self.setState({ data: data, error: false, lastRefresh: formatDate(new Date()) });
@@ -82,7 +112,7 @@ export default class EvgaQueue extends Component {
     }
 
     toggleSku = (sku) => {
-        const cur = (storage.get(sku) || {});
+        const cur = getStorage(sku);
         cur.hide = !cur.hide;
         storage.set(sku, cur);
         const data = this.state.data.map(d => {
@@ -95,7 +125,25 @@ export default class EvgaQueue extends Component {
             return d;
         });
         this.setState({ data: data });
-    }
+    };
+
+    updateMyQueue = (sku, rawValue) => {
+        const cur = getStorage(sku);
+        cur.myQueue = cur.myQueue || {};
+        cur.myQueue.raw = rawValue;
+        storage.set(sku, cur);
+
+        const data = this.state.data.map(d => {
+            if(d.sku === sku){
+                return {
+                    ...d,
+                    myQueue: setMyQueueDisplay({ ...d.myQueue, raw:rawValue })
+                };
+            }
+            return d;
+        });
+        this.setState({ data: data });
+    };
     
     renderCategoryRows = (category) => {
 
@@ -111,7 +159,7 @@ export default class EvgaQueue extends Component {
         return (
             <>
                 <tr className="EvgaQueue-table-category-row">
-                    <th colSpan={5}>
+                    <th colSpan={6}>
                         {category}
                     </th>
                 </tr>
@@ -126,6 +174,9 @@ export default class EvgaQueue extends Component {
                             </td>
                             <td>
                                 {d.timestamp}
+                            </td>
+                            <td>
+                                <QueueTextbox rawValue={d.myQueue.raw} display={d.myQueue.display} onSave={(rawValue) => this.updateMyQueue(d.sku, rawValue)} placeholder='M/d/yyyy h:mm:ss aa PT' />
                             </td>
                             <td>
                                 {d.updated}
@@ -162,6 +213,9 @@ export default class EvgaQueue extends Component {
                             </th>
                             <th>
                                 Queue Timestamp (PT)
+                            </th>
+                            <th>
+                                My Queue (PT)
                             </th>
                             <th>
                                 Last Update
