@@ -50,7 +50,7 @@ const getCategory = (item) => {
 };
 
 const expectedFormatReg = /^(\d{1,2}\/\d{1,2}\/\d{4}\s+\d{1,2}:\d{2}:\d{2}\s+[AP]M)(?:\s+PT)$/;
-const setMyQueueDisplay = (myQueue) => {
+const setMyQueueDisplay = (myQueue, timestampNA) => {
     myQueue = myQueue || {};
     const raw = myQueue.raw;
     if(!raw){
@@ -64,6 +64,35 @@ const setMyQueueDisplay = (myQueue) => {
             const dateStr = m[1] + ' GMT+0000';
             const date = new Date(dateStr);
             myQueue.display = date.toLocaleString('en-US', { timeZone: 'UTC' });
+            if(timestampNA){
+                const timestampDate = new Date(timestampNA);                
+                const diff = date.valueOf() - timestampDate.valueOf();
+                let diffDisplay = diff / 1000 / 60;;
+                let diffUnit = 'min';
+                if(diffDisplay >= 60) {
+                    diffDisplay /= 60; // hours
+                    diffUnit = 'hr';
+                }
+                if(diffDisplay >= 24) {
+                    diffDisplay /= 24; // days
+                    diffUnit = 'days';
+                }
+                if(diffDisplay < 10){
+                    diffDisplay = diffDisplay.toPrecision(2);
+                } else {
+                    diffDisplay = Math.floor(diffDisplay);
+                }
+
+                const plus = diff > 0 ? '+' : '';
+                diffDisplay = `(${plus}${diffDisplay} ${diffUnit})`
+                if(diff < 0){
+                    // queue has passed
+                    myQueue.display = 'Notify Sent ' + diffDisplay;
+                } else {
+                    myQueue.display += ' ' + diffDisplay;
+                }
+
+            }
         }        
     }
 
@@ -91,9 +120,10 @@ export default class EvgaQueue extends Component {
                     name: d.name,
                     productLink: 'https://www.evga.com/products/product.aspx?pn=' + d.sku,
                     timestamp: formatDate(d.timestampNA, true),
+                    timestampNA: d.timestampNA,
                     updated: formatDateOnly(d.updatedAt),
                     hide: !!getStorage(d.sku).hide || !d.timestampNA,
-                    myQueue: setMyQueueDisplay(getStorage(d.sku).myQueue),
+                    myQueue: setMyQueueDisplay(getStorage(d.sku).myQueue, d.timestampNA),
                     category: getCategory(d)
                 }));
                 self.setState({ data: data, error: false, lastRefresh: formatDate(new Date()) });
@@ -137,7 +167,7 @@ export default class EvgaQueue extends Component {
             if(d.sku === sku){
                 return {
                     ...d,
-                    myQueue: setMyQueueDisplay({ ...d.myQueue, raw:rawValue })
+                    myQueue: setMyQueueDisplay({ ...d.myQueue, raw:rawValue }, d.timestampNA)
                 };
             }
             return d;
