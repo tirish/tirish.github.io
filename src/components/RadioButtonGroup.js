@@ -7,11 +7,13 @@ class RadioButtonGroup extends Component {
     };
 
     render = () => {
-        const { options, name, selected } = this.props;
+        const { options, name, selected, size } = this.props;
+
+        const className = 'input-group' + (size ? ' input-group-' + size : '');
 
         return (
             <>
-                <div className="input-group input-group-lg">
+                <div className={className}>
                     {options.map(opt => (
                         <label key={opt.value} className={`btn btn-${selected === opt.value ? 'success' : 'outline-primary'}`} htmlFor={`${name}-${opt.value}`}>{opt.label}</label>
                     ))}

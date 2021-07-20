@@ -170,7 +170,7 @@ class PigGameSetup extends Component {
         return (
             <div>
                 <h3>Number of Players</h3>
-                <RadioButtonGroup options={options} selected={radioValue} onSelect={this.onPlayerCountSelect} />
+                <RadioButtonGroup options={options} selected={radioValue} onSelect={this.onPlayerCountSelect} size='lg'/>
                 { this.state.more ? (
                     <div class="mt-3">
                         <label for="morePlayers" class="form-label">More Players</label>

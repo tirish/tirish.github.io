@@ -215,9 +215,17 @@ class PigGame extends Component {
         return (
             <div>
                 {stage !== 'game_over' && (
-                    <>                        
-                        <h3>Scoring Mode</h3>
-                        <RadioButtonGroup options={scoringModes} selected={this.state.game.mode} onSelect={this.onModeChange} />
+                    <>
+                        <div className="row mb-3">
+                            <div className="col">
+                                <h3>Scoring</h3>
+                            </div>
+                            <div className="col">
+                                <div className="float-end">
+                                    <RadioButtonGroup options={scoringModes} selected={this.state.game.mode} onSelect={this.onModeChange} size='sm'/>
+                                </div>                                
+                            </div>
+                        </div>
                         <div className="mt-3">
                             {this.state.game.mode === 'adv' && (this.renderAdvancedScoring())}
                             {this.state.game.mode === 'basic' && (<span>Coming soon! Until then, use Advanced scoring.</span>)}
