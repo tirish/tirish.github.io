@@ -54,11 +54,9 @@ class PigGameSetup extends Component {
             if(this.state.players > 0 && this.state.players <= 20) {
                 this.setState(prev => {
                     const names = new Array(this.state.players).fill('');
-                    console.log('next step1', this.state.players, names);
                     for(let i = 0; i < names.length && prev.names.length; i++){
                         names[i] = prev.names[i] || '';
                     }
-                    console.log('next step2', this.state.players, names);
                     return { stage: 'names', names }
                 });
             }
