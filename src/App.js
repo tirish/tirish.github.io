@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Home from './components/Home';
 import EvgaQueue from './components/EvgaQueue';
+import PigGame from './components/PigGame';
 
 function App() {
   return (
@@ -21,11 +22,17 @@ function App() {
               <li>
                 <Link to="/evgaQueue">EVGA Queue</Link>
               </li>
+              <li>
+                <Link to="/pigs">Pig Game</Link>
+              </li>
             </ul>
           </nav>
         </header>
         <section className="App-content">
           <Switch>
+            <Route path="/pigs">
+              <PigGame />
+            </Route>
             <Route path="/evgaQueue"> 
               <EvgaQueue />
             </Route>            

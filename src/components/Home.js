@@ -2,7 +2,9 @@
 export default function Home(){
     return (
         <div>
-            Home
+            <ul>
+                <li><a href="https://github.com/tirish" target="_blank">Github</a></li>
+            </ul>
         </div>
     );
 }
