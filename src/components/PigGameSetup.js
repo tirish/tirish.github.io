@@ -123,7 +123,6 @@ class PigGameSetup extends Component {
     renderNameSelection = () => {
 
         const names = this.state.names;
-        console.log(names);
         const missingNames = names.some(n => !(n || '').trim());
 
         return (
