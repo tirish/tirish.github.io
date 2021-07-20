@@ -41,3 +41,8 @@ body {
 .App-link {
   color: #61dafb;
 }
+
+.btn:active {
+  /* Scaling button to 0.98 to its original size for better press feel */
+  transform: scale(0.98);  
+}
